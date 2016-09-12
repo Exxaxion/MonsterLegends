@@ -13,7 +13,7 @@ import android.widget.TextView;
  * Created by apprenti on 09/09/16.
  */
 
-public class MonstreListe extends ArrayAdapter<String> {
+public class MonstreListeAdapter extends ArrayAdapter<String> {
 
     private Integer[] Mob = {
             R.drawable.feu,
@@ -26,32 +26,38 @@ public class MonstreListe extends ArrayAdapter<String> {
             R.drawable.magie,
             R.drawable.metal };
 
+    private static class ViewHolder {
+        private TextView txt;
+        private ImageView image;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.i("position", Integer.toString(position));
-        View rowView;
+        ViewHolder holder = null;
 
         if(convertView == null ) {
             LayoutInflater inflater = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            rowView = inflater.inflate(R.layout.row_layout, parent, false);
+            convertView = inflater.inflate(R.layout.row_layout, parent, false);
 
-            TextView textView = (TextView) rowView.findViewById(R.id.label);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-
-            textView.setText(getItem(position));
-            imageView.setImageResource(Mob[position]);
+            holder = new ViewHolder();
+            holder.txt = (TextView) convertView.findViewById(R.id.label);
+            holder.image = (ImageView) convertView.findViewById(R.id.icon);
+            convertView.setTag(holder);
         }
         else {
 
-            rowView = convertView;
+            holder = (ViewHolder)convertView.getTag();
         }
 
-        return rowView;
+        holder.txt.setText(getItem(position));
+        holder.image.setImageResource(Mob[position]);
+
+        return convertView;
     }
 
-    public MonstreListe(Context context, String[] values) {
+    public MonstreListeAdapter(Context context, String[] values) {
         super(context, R.layout.row_layout, values);
         Log.i("values length", Integer.toString(values.length));
 

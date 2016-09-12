@@ -18,7 +18,7 @@ public class MainActivity extends ListActivity {
                 "Panda", "Thunder Eagle", "Light Spirit",
                 "Tyrannoking", "Genie", "Firesaur", "Mersnake", "Treezard", "Metalsaur" };
 
-        MonstreListe adapter = new MonstreListe(this, values);
+        MonstreListeAdapter adapter = new MonstreListeAdapter(this, values);
         setListAdapter(adapter);
     }
 
